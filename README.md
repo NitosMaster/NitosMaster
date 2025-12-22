@@ -1,5 +1,7 @@
 ## Hello
 
+🇵🇹 / ♂️ / 2️⃣3️⃣ / Mart
+
 **Interests**: 
     * Comp Sci
     * Math
@@ -37,6 +39,7 @@
     * **TF2**
     * **Speedrun-esques** such as Hitman: WoA, UltraKill, Neon White, Quake 1, etc
     * **Hard games(pretty broad** such as Sekiro, Hollow Knight, Dead Cells, etc
+
 **Favorite Foods**:
     * **Breaded**
     * **Pizza**
