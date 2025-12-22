@@ -19,9 +19,10 @@
 
 **Favorite Langs**:
     * ![Crystal](https://img.shields.io/badge/language-crystal-black)
-    * ![Python](https://img.shields.io/badge/language-python-blue)
+    * ![Python](https://img.shields.io/badge/language-python-yellow)
     * ![CSS](https://img.shields.io/badge/language-css-purple)
     * ![ASM](https://img.shields.io/badge/language-asm-green)(it's fun to try to do simple things in the most painful way possible)
+    * ![nix](https://img.shields.io/badge/language-nix-blue) I use nixOS, btw.
 
 **Favorite Albums**:
     * *loveless* by *my bloody valentine*
