@@ -46,3 +46,224 @@
 * **Pizza**
 * **Hamburgers**
 * <ins>**_You_**<ins>
+
+## configuration.nix
+
+```nix
+#nixOS config: 
+{
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
+  boot.loader.systemd-boot.enable = false;
+  boot.loader.efi.canTouchEfiVariables = false;
+
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda"; # Assuming your main disk is /dev/sda
+
+  networking.hostName = "nitosmaster-nixos";
+  networking.networkmanager.enable = true;
+
+  time.timeZone = "Europe/Lisbon";
+
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "pt_PT.UTF-8";
+    LC_IDENTIFICATION = "pt_PT.UTF-8";
+    LC_MEASUREMENT = "pt_PT.UTF-8";
+    LC_MONETARY = "pt_PT.UTF-8";
+    LC_NAME = "pt_PT.UTF-8";
+    LC_NUMERIC = "pt_PT.UTF-8";
+    LC_PAPER = "pt_PT.UTF-8";
+    LC_TELEPHONE = "pt_PT.UTF-8";
+    LC_TIME = "pt_PT.UTF-8";
+  };
+
+  services.xserver.xkb.layout = "pt";
+  console.keyMap = "pt-latin1";
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+        user = "greeter";
+      };
+    };
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
+  };
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
+services.ollama = {
+    enable = true;
+    acceleration = "cuda"; # Uses NVIDIA GPU
+    environmentVariables = {
+      OLLAMA_ORIGINS = "https://nitosmaster.neocities.org";
+    };
+  };
+
+  services.xserver.videoDrivers = [ "modesetting" ];
+
+  users.users.nitosmaster = {
+    isNormalUser = true;
+    description = "Nitosmaster";
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "input" ];
+    shell = pkgs.zsh;
+  };
+
+  programs.zsh.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    cloudflared
+    waybar
+    dunst
+    rofi
+    swww
+    hyprpaper
+    wlogout
+    grim
+    slurp
+    wl-clipboard
+    cliphist
+    kitty
+    alacritty
+    starship
+
+    # Corrected Nerd Fonts attribute names
+    pkgs.nerd-fonts.jetbrains-mono
+    pkgs.nerd-fonts.fira-code
+    pkgs.nerd-fonts.meslo-lg
+    
+    eza
+    bat
+    fzf
+    zoxide
+    ripgrep
+    fd
+    neovim
+    lua-language-server
+    nil
+    black
+    stylua
+    nixpkgs-fmt
+    firefox
+    
+    python311
+    python311Packages.pip
+    python311Packages.virtualenv
+    
+    ruby_3_5
+    crystal_1_17
+    shards
+    nodejs_24
+    gcc
+    gnumake
+    cmake
+    git
+    gh
+    lazygit
+    networkmanagerapplet
+    pavucontrol
+    brightnessctl
+    playerctl
+    
+    pkgs.xfce.thunar
+    ranger
+    btop
+    htop
+    cava
+    fastfetch
+    neofetch
+    
+    noto-fonts
+    noto-fonts-color-emoji
+    wget
+    curl
+    unzip
+    zip
+    tree
+  ];
+
+  fonts.packages = with pkgs; [
+    pkgs.nerd-fonts.jetbrains-mono
+    pkgs.nerd-fonts.fira-code
+    pkgs.nerd-fonts.meslo-lg
+    
+    noto-fonts
+    noto-fonts-color-emoji
+    font-awesome
+  ];
+
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      monospace = [ "JetBrainsMono Nerd Font" ];
+      sansSerif = [ "Noto Sans" ];
+      serif = [ "Noto Serif" ];
+      emoji = [ "Noto Color Emoji" ];
+    };
+  };
+
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
+
+  nixpkgs.config.allowUnfree = true;
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
+  services.printing.enable = true;
+
+  system.stateVersion = "24.05";
+}
+```
