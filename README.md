@@ -51,6 +51,8 @@
 
 ```nix
 #nixOS config: 
+{ config, pkgs, ...}:
+
 {
   imports = [
     ./hardware-configuration.nix
@@ -140,8 +142,6 @@ services.ollama = {
       OLLAMA_ORIGINS = "https://nitosmaster.neocities.org";
     };
   };
-
-  services.xserver.videoDrivers = [ "modesetting" ];
 
   users.users.nitosmaster = {
     isNormalUser = true;
