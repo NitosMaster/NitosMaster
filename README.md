@@ -47,22 +47,22 @@
 * **Hamburgers**
 * <ins>**_You_**<ins>
 
-## configuration.nix
+## dotfiles
+
+###nixOS config
 
 ```nix
-#nixOS config: 
-{ config, pkgs, ...}:
-
 {
   imports = [
     ./hardware-configuration.nix
   ];
 
   boot.loader.systemd-boot.enable = false;
-  boot.loader.efi.canTouchEfiVariables = false;
-
+  boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda"; # Assuming your main disk is /dev/sda
+  boot.loader.grub.device = "nodev";
+  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.useOSProber = true;
 
   networking.hostName = "nitosmaster-nixos";
   networking.networkmanager.enable = true;
@@ -213,6 +213,7 @@ services.ollama = {
     cava
     fastfetch
     neofetch
+    hyfetch
     
     noto-fonts
     noto-fonts-color-emoji
@@ -268,7 +269,7 @@ services.ollama = {
 }
 ```
 
-## hyprland.conf
+### ~/.config/hypr/hyprland.conf
 
 ```conf
 monitor=,highres,auto,1
@@ -300,8 +301,7 @@ bind = $mainMod, C, killactive,
 bind = $mainMod, M, exit,
 bind = $mainMod, E, exec, thunar
 bind = $mainMod, R, exec, rofi -show drun
-bind = $mainMod, V, togglefloating
-bind = $mainMod, F, fullscreen
+bind = $mainMod, V, togglefloating,
 
 bind = $mainMod, left, movefocus, l
 bind = $mainMod, right, movefocus, r
@@ -316,4 +316,75 @@ bindm = $mainMod, mouse:272, movewindow
 bindm = $mainMod, mouse:273, resizewindow
 
 exec-once = waybar &
-````
+```
+
+### ~/.config/waybar/config
+
+```conf
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right": ["cpu", "memory", "tray"],
+
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate"
+    },
+    "clock": {
+        "format": "{:%H:%M:%S [SYSTEM_TIME]}",
+        "interval": 1,
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "cpu": {
+        "format": "CPU: {usage}%",
+        "interval": 2
+    },
+    "memory": {
+        "format": "RAM: {}%"
+    }
+}
+```
+
+### ~/.config/waybar/style.css
+```css
+* {
+    border: none;
+    font-family: "quake", "JetBrainsMono Nerd Font";
+    font-size: 14px;
+}
+
+window#waybar {
+    background-color: #282323;
+    border-bottom: 3px double #4baf4b;
+    color: #af64af;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    color: #4baf4b;
+}
+
+#workspaces button.active {
+    color: #af64af;
+    text-shadow: 0 0 5px #af64af;
+    border-bottom: 2px solid #af64af;
+}
+
+#clock, #cpu, #memory, #network, #window {
+    padding: 0 15px;
+    border-left: 1px dotted #4baf4b;
+}
+
+#clock {
+    color: #4baf4b;
+    text-shadow: 0 0 5px #4baf4b;
+}
+
+#window {
+    border: none;
+    font-style: italic;
+}
+```
