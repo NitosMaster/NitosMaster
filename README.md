@@ -49,7 +49,7 @@
 
 ## dotfiles
 
-###nixOS config
+### nixOS config
 
 ```nix
 {
