@@ -267,3 +267,52 @@ services.ollama = {
   system.stateVersion = "24.05";
 }
 ```
+
+## hyprland.conf
+
+```conf
+monitor=,highres,auto,1
+
+env = LIBVA_DRIVER_NAME,nvidia
+env = XDG_SESSION_TYPE,wayland
+env = GBM_BACKEND,nvidia-drm
+env = __GLX_VENDOR_LIBRARY_NAME,nvidia
+env = NIXOS_OZONE_WL,1
+
+input {
+    kb_layout = pt
+    follow_mouse = 1
+}
+
+general {
+    gaps_in = 5
+    gaps_out = 10
+    border_size = 2
+    col.active_border = rgb(4baf4b) rgb(af64af) 45deg
+    col.inactive_border = rgba(595959aa)
+    layout = dwindle
+}
+
+$mainMod = SUPER
+
+bind = $mainMod, Q, exec, kitty
+bind = $mainMod, C, killactive,
+bind = $mainMod, M, exit,
+bind = $mainMod, E, exec, thunar
+bind = $mainMod, R, exec, rofi -show drun
+bind = $mainMod, V, togglefloating,
+
+bind = $mainMod, left, movefocus, l
+bind = $mainMod, right, movefocus, r
+bind = $mainMod, up, movefocus, u
+bind = $mainMod, down, movefocus, d
+
+bind = $mainMod, 1, workspace, 1
+bind = $mainMod, 2, workspace, 2
+bind = $mainMod, 3, workspace, 3
+
+bindm = $mainMod, mouse:272, movewindow
+bindm = $mainMod, mouse:273, resizewindow
+
+exec-once = waybar &
+````
