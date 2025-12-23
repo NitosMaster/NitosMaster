@@ -300,7 +300,8 @@ bind = $mainMod, C, killactive,
 bind = $mainMod, M, exit,
 bind = $mainMod, E, exec, thunar
 bind = $mainMod, R, exec, rofi -show drun
-bind = $mainMod, V, togglefloating,
+bind = $mainMod, V, togglefloating
+bind = $mainMod, F, fullscreen
 
 bind = $mainMod, left, movefocus, l
 bind = $mainMod, right, movefocus, r
