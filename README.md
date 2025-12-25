@@ -52,6 +52,8 @@
 ### nixOS config
 
 ```nix
+{ config, pkgs, ... }:
+
 {
   imports = [
     ./hardware-configuration.nix
@@ -63,6 +65,7 @@
   boot.loader.grub.device = "nodev";
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.useOSProber = true;
+  boot.kernelParams = [ "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" ];
 
   networking.hostName = "nitosmaster-nixos";
   networking.networkmanager.enable = true;
@@ -131,6 +134,8 @@ services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
     open = false;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
@@ -265,7 +270,7 @@ services.ollama = {
 
   services.printing.enable = true;
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
 }
 ```
 
