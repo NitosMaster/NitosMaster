@@ -94,7 +94,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
         user = "greeter";
       };
     };
@@ -191,10 +191,10 @@ services.ollama = {
     python311Packages.pip
     python311Packages.virtualenv
     
-    ruby_3_5
-    crystal_1_17
+    ruby
+    crystal
     shards
-    nodejs_24
+    nodejs
     gcc
     gnumake
     cmake
