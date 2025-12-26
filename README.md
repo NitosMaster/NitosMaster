@@ -65,7 +65,7 @@
   boot.loader.grub.device = "nodev";
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.useOSProber = true;
-  boot.kernelParams = [ "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" ];
+  boot.kernelParams = [ "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" "noapic" "pci=nobar" ];
 
   networking.hostName = "nitosmaster-nixos";
   networking.networkmanager.enable = true;
